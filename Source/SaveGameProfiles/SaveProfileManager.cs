@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using Verse;
 
 namespace SaveGameProfiles {
     public class SaveProfileManager {
@@ -12,9 +13,55 @@ namespace SaveGameProfiles {
         private const string SAVE_PROFILE_LIST_ATTR = "SaveProfiles";
         private const string SAVE_PROFILE_ATTR = "SaveProfile";
 
+        private static SaveProfile currentProfile;
+
+        public static SaveProfile CurrentProfile {
+            get { return currentProfile; }
+            set {
+                Main.LogMessage("Setting current profile to " + value.Name);
+                currentProfile = value;
+            }
+        }
+
         private static Dictionary<string, SaveProfile> saveProfiles;
+        private static List<SaveFileInfo> allSaveFiles;
         private static XmlReader reader = null;
         private static XmlWriter writer = null;
+
+        public static Dictionary<string, SaveProfile> SaveProfiles {
+            get { return saveProfiles; }
+        }
+
+        public static bool CreateSaveProfile(string name) {
+            bool success = false;
+
+            if (name != null) {
+                string trimmedName = name.Trim(new char[] { ' ', '\n' });
+
+                if (IsNameValid(trimmedName) && saveProfiles.ContainsKey(trimmedName)) {
+                    saveProfiles.Add(name, new SaveProfile(name));
+                    success = true;
+                    string fullPath = Path.GetFullPath(DEFAULT_PROFILE_PATH).ToString();
+                    SaveProfileFile(fullPath);
+                }
+            }
+
+            return success;
+        }
+
+        public static void LoadSaveFiles() {
+            allSaveFiles = new List<SaveFileInfo>();
+
+            foreach (FileInfo allSavedGameFile in GenFilePaths.AllSavedGameFiles) {
+                try {
+                    SaveFileInfo saveFile = new SaveFileInfo(allSavedGameFile);
+                    allSaveFiles.Add(saveFile);
+                    Main.LogMessage("Loaded save file: " + saveFile.FileInfo.FullName);
+                } catch (Exception ex) {
+                    Log.Error("Exception loading " + allSavedGameFile.Name + ": " + ex.ToString());
+                }
+            }
+        }
 
         public static void LoadSaveProfiles() {
             saveProfiles = new Dictionary<string, SaveProfile>();
@@ -134,6 +181,11 @@ namespace SaveGameProfiles {
             } else {
                 Main.LogError("Base SaveProfiles element was null");
             }
+
+        }
+
+        private static bool IsNameValid(string name) {
+            return !name.NullOrEmpty() && !name.Contains("<") && !name.Contains(">") && !name.Contains("\\");
         }
     }
 

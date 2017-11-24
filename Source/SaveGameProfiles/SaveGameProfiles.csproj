@@ -49,6 +49,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialog_NameProfile.cs" />
+    <Compile Include="Dialog_SaveFileListProfiles_Load.cs" />
     <Compile Include="HarmonyPatches.cs" />
     <Compile Include="SaveProfileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

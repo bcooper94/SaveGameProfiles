@@ -1,15 +1,1 @@
-<SaveProfiles>
-	<SaveProfile>
-		<Name>Test Profile Name</Name>
-		<SaveFiles>
-			<SaveFile>testFile.dat</SaveFile>
-			<SaveFile>anotherFile.dat</SaveFile>
-		</SaveFiles>
-	</SaveProfile>
-	<SaveProfile>
-		<Name>Another Profile</Name>
-		<SaveFiles>
-			<SaveFile>profile.dat</SaveFile>
-		</SaveFiles>
-	</SaveProfile>
-</SaveProfiles>
+﻿<?xml version="1.0" encoding="utf-8"?><SaveProfiles><SaveProfile><Name>Test Profile Name</Name><SaveFiles><SaveFile>testFile.dat</SaveFile><SaveFile>anotherFile.dat</SaveFile></SaveFiles></SaveProfile><SaveProfile><Name>Another Profile</Name><SaveFiles><SaveFile>profile.dat</SaveFile></SaveFiles></SaveProfile><SaveProfile><Name>Test profile</Name><SaveFiles></SaveFiles></SaveProfile><SaveProfile><Name>Here's yet another profile</Name><SaveFiles></SaveFiles></SaveProfile><SaveProfile><Name></Name><SaveFiles></SaveFiles></SaveProfile><SaveProfile><Name> Test Profile Name</Name><SaveFiles></SaveFiles></SaveProfile></SaveProfiles>
